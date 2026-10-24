@@ -10,23 +10,22 @@ over TypeSafe's System One API, so any client of that API can call it unchanged.
 
 ## Results
 
-![Fovea-4B compared with four open decision models on 2,360 held-out questions](assets/comparison.png)
+![Fovea-4B compared with Imajev-4B, H2O-Lightning-4B and Jev-Vision on 2,360 held-out questions](assets/comparison.png)
 
-We compare Fovea-4B with four open decision models: the two strongest open 4B models on the ImageJevBench v0.3
-leaderboard by Intelligence, Imajev-4B (#1) and H2O-Lightning-4B image (#2), and two larger models, Jev-Vision (8B) and
-imajev-9b (9B). All five answer the same 2,360 held-out multiple-choice questions, each served as its authors release
-it, and are scored with the leaderboard's Intelligence formula, 100 × (accuracy − chance) / (1 − chance).
+We compare Fovea-4B with three open decision models: the two strongest open 4B models on the ImageJevBench v0.3
+leaderboard by Intelligence, Imajev-4B (#1) and H2O-Lightning-4B image (#2), and the larger Jev-Vision (8B). All four
+answer the same 2,360 held-out multiple-choice questions, each served as its authors release it, and are scored with
+the leaderboard's Intelligence formula, 100 × (accuracy − chance) / (1 − chance).
 
-Fovea-4B scores 80.6 overall, the highest of the 4B models (Imajev-4B 79.4, H2O-Lightning-4B 79.9). Paired on the same
-questions, it leads Imajev-4B by +1.1 points (95% interval +0.3 to +2.0) and H2O-Lightning-4B by +0.7 (−0.7 to +2.0). It
-beats the twice-as-large Jev-Vision (75.7) by +4.9 (+3.0 to +6.7) and is statistically tied with imajev-9b (81.3; −0.7,
-from −2.1 to +0.8) at less than half its size. By category it stands furthest above the field on multi-image comparison,
-charts and counting. Its calibration error is the lowest of the 4B models (expected calibration error 0.035, against
-0.059 and 0.061; imajev-9b 0.022, Jev-Vision 0.179).
+Fovea-4B scores 80.6 overall, the highest of the four (H2O-Lightning-4B 79.9, Imajev-4B 79.4, Jev-Vision 75.7). Paired on
+the same questions, it leads Imajev-4B by +1.1 points (95% interval +0.3 to +2.0), H2O-Lightning-4B by +0.7 (−0.7 to
++2.0) and the twice-as-large Jev-Vision by +4.9 (+3.0 to +6.7). Its largest leads by category are on multi-image
+comparison, charts and counting, while H2O-Lightning-4B is slightly ahead on diagrams and general photos. Its
+calibration error is also the lowest of the four (expected calibration error 0.035, against 0.059, 0.061 and 0.179).
 
 **How each model was served.** Fovea-4B: images up to 2 MP, its calibrated temperatures. Imajev-4B: native resolution,
 temperature 1.305. H2O-Lightning-4B image: images up to 1 MP, temperature 0.65. Jev-Vision: its own decision function,
-images up to 1.29 MP, temperature 0.5. imajev-9b: native resolution, temperature 1.748.
+images up to 1.29 MP, temperature 0.5.
 
 **Evaluation data.** 2,360 multiple-choice questions from the test or validation splits of public benchmarks, none of
 them used for training: DocVQA (400 document questions), ChartQA (300) and SEED-Bench-2-Plus charts (100), AI2D (300
