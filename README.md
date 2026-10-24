@@ -15,7 +15,7 @@ git clone https://github.com/Sivasuthan9/fovea && cd fovea
 python3.12 -m venv .venv && . .venv/bin/activate
 pip install torch==2.13.0 torchvision==0.28.0 --index-url https://download.pytorch.org/whl/cu130
 pip install -r requirements.txt
-python scripts/serve.py --model Sivasuthan/fovea-4b --revision {{HF_REVISION}} --port 8000
+python scripts/serve.py --model Sivasuthan/fovea-4b --revision 55c1dd919bc59dfd3316de6d752e18f3242ad385 --port 8000
 ```
 
 One GPU with 16 GB or more is enough. Start-up downloads the weights (9 GB), records CUDA graphs and warms up the kernels;
