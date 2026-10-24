@@ -8,6 +8,28 @@ over TypeSafe's System One API, so any client of that API can call it unchanged.
 - **Question types:** `noul` (yes/no), `choice` (named options), `score` (ordered levels)
 - **Output:** every answer covers exactly the requested labels and sums to 1
 
+## Results
+
+![Fovea-4B compared with Imajev-4B and H2O-Lightning-4B on 2,360 held-out questions](assets/comparison.png)
+
+We compare Fovea-4B with the two strongest open 4B models on the ImageJevBench v0.3 leaderboard by Intelligence, the
+state of the art at this size: Imajev-4B (#1) and H2O-Lightning-4B image (#2). All three answer the same 2,360 held-out
+multiple-choice questions, each served as its authors release it (Fovea-4B: images up to 2 MP and its calibrated
+temperatures; Imajev-4B: native resolution, temperature 1.305; H2O-Lightning-4B: images up to 1 MP, temperature 0.65),
+and are scored with the leaderboard's Intelligence formula, 100 × (accuracy − chance) / (1 − chance).
+
+Fovea-4B scores 80.6 overall, against 79.4 for Imajev-4B and 79.9 for H2O-Lightning-4B. Paired on the same questions,
+its lead over Imajev-4B is +1.2 points (95% interval +0.3 to +2.0) and over H2O-Lightning-4B +0.7 points (95% interval
+−0.7 to +2.0), with the largest gains on multi-image comparison, charts, spatial relations and counting. Its calibration
+error on these questions is also the lowest of the three (expected calibration error 0.035, against 0.059 and 0.061).
+
+**Evaluation data.** 2,360 multiple-choice questions from the test or validation splits of public benchmarks, none of
+them used for training: DocVQA (400 document questions), ChartQA (300) and SEED-Bench-2-Plus charts (100), AI2D (300
+diagrams) and SEED-Bench-2-Plus maps (100), CV-Bench (300: depth, distance, spatial relation and counting), BLINK (560:
+spatial reasoning, counting and nine multi-image tasks) and MMStar (300 general photos). The overall score weights the
+categories by the ImageJevBench core-track mix. This is our own held-out evaluation, not the ImageJevBench leaderboard:
+it contains only multiple-choice questions, and leaderboard scores are lower and can rank models differently.
+
 ## Run the server
 
 ```sh
