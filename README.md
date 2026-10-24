@@ -1,4 +1,13 @@
-# Fovea-4B
+<h1 align="center">Fovea-4B</h1>
+
+<p align="center"><b>A fast, calibrated decision model for images</b></p>
+
+<p align="center">
+  <a href="https://huggingface.co/Sivasuthan/fovea-4b"><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-fovea--4b-ffcc4d"></a>
+  <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-2a78d6"></a>
+  <img alt="Parameters: 4B" src="https://img.shields.io/badge/parameters-4B-1baf7a">
+  <img alt="API: TypeSafe System One" src="https://img.shields.io/badge/API-TypeSafe%20System%20One-5c5c58">
+</p>
 
 Fovea-4B is a fast decision model for images. Given an image (a photo, document, receipt, chart or screenshot), a JSON
 state and a typed question, it returns a probability for every allowed answer in a single forward pass. It is served
@@ -8,9 +17,11 @@ over TypeSafe's System One API, so any client of that API can call it unchanged.
 - **Question types:** `noul` (yes/no), `choice` (named options), `score` (ordered levels)
 - **Output:** every answer covers exactly the requested labels and sums to 1
 
-## Results
+<h2 align="center">Results</h2>
 
-![Fovea-4B compared with Imajev-4B, H2O-Lightning-4B and Jev-Vision on 2,360 held-out questions](assets/comparison.png)
+<p align="center">
+  <img src="assets/comparison.png" alt="Fovea-4B compared with Imajev-4B, H2O-Lightning-4B and Jev-Vision on 2,360 held-out questions" width="100%">
+</p>
 
 We compare Fovea-4B with three open decision models: the two strongest open 4B models on the ImageJevBench v0.3
 leaderboard by Intelligence, Imajev-4B (#1) and H2O-Lightning-4B image (#2), and the larger Jev-Vision (8B). All four
@@ -34,7 +45,7 @@ spatial reasoning, counting and nine multi-image tasks) and MMStar (300 general 
 categories by the ImageJevBench core-track mix. This is our own held-out evaluation, not the ImageJevBench leaderboard:
 it contains only multiple-choice questions, and leaderboard scores are lower and can rank models differently.
 
-## Run the server
+<h2 align="center">Run the server</h2>
 
 ```sh
 git clone https://github.com/Sivasuthan9/fovea && cd fovea
@@ -52,7 +63,7 @@ curl -s http://127.0.0.1:8000/health
 python scripts/test_contract.py http://127.0.0.1:8000 some_image.jpg   # checks every answer against the harness rules
 ```
 
-## Request and response
+<h2 align="center">Request and response</h2>
 
 ```json
 POST /v1/systemone
@@ -77,16 +88,7 @@ POST /v1/systemone
 - Several questions per request are allowed. A question that cannot be scored gets a uniform answer, not an error.
 - Images larger than the model's pixel budget (calibration.json, `max_pixels`) are downscaled, keeping the aspect ratio.
 
-## Repository
-
-| Path | What it is |
-|---|---|
-| `fovea/engine.py` | prompt, readout and model loading; `FastPath` (uint8 pixels normalised on the GPU, CUDA graphs) |
-| `fovea/server.py` | the System One HTTP server (standard library) |
-| `scripts/serve.py` | start the server |
-| `scripts/test_contract.py` | contract test against a running server |
-
-## Training
+<h2 align="center">Training</h2>
 
 The model was trained on 57,441 typed image decisions built from public train splits (TextVQA, DocVQA, ChartQA, GQA,
 ScienceQA, A-OKVQA), synthetic scenes with answers known by construction (counting, small text, misleading charts,
@@ -94,6 +96,6 @@ spatial relations) and Eikos text decisions, with a cross-entropy loss on the de
 language-model projection and the readout were trained in two runs and averaged in weight space, then merged into the
 weights. Details are in the model card.
 
-## Licence
+<h2 align="center">Licence</h2>
 
 Apache-2.0 (LICENSE). Third-party work and the changes made are listed in NOTICE.
