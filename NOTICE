@@ -1,0 +1,13 @@
+Fovea-4B
+Copyright 2026 Sivasuthan Sukumar
+
+This product includes work by others, used under the Apache License 2.0:
+
+- Qwen3.5-4B (revision 851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a), Copyright the Qwen Team, Alibaba Group: base model.
+- Imajev-4B (revision 27d4e54fc11efeea2ea4d10e910643440d2333b5) and its open-source code, Copyright 2026 Mohit Garg:
+  training was initialised from it, and the prompt format, decision readout and CUDA-graph serving path in
+  fovea/engine.py follow it. Its CUDA-graph design credits JevK5's runtime (Apache-2.0).
+
+Changes: a further LoRA (rank 32 on every language-model projection, including the Gated DeltaNet projections) and the
+decision readout were trained on typed image decisions (see training/), two such runs were averaged in weight space, and
+the result was merged into the weights.

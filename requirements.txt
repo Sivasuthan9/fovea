@@ -1,0 +1,15 @@
+# Python 3.12. Install torch/torchvision from the PyTorch index for your CUDA (Blackwell GPUs need CUDA >= 12.8), e.g.
+#   pip install torch==2.13.0 torchvision==0.28.0 --index-url https://download.pytorch.org/whl/cu130
+torch==2.13.0
+torchvision==0.28.0
+transformers==5.16.1
+tokenizers==0.23.1
+safetensors==0.8.0
+huggingface_hub==1.29.0
+numpy==2.5.2
+pillow==12.3.0
+# Gated DeltaNet kernels (Triton) used by Qwen3.5's linear-attention layers; without them transformers falls back to a
+# much slower PyTorch path.
+fla-core==0.5.2
+flash-linear-attention==0.5.2
+einops==0.8.2

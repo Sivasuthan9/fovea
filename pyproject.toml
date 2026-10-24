@@ -1,0 +1,9 @@
+[project]
+name = "fovea"
+version = "1.0.0"
+description = "Fovea-4B: a fast decision model for images, served over TypeSafe's System One API"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+
+[tool.setuptools]
+packages = ["fovea"]
