@@ -52,6 +52,35 @@ returns `{"model": "fovea-4b", "answers": {"decision": {"type": "choice", "choic
 top-level `images` list. Every answer covers exactly the requested labels and sums to 1; a question that cannot be scored
 gets a uniform answer rather than an error.
 
+## Evaluation
+
+Fovea-4B against the two strongest open 4B models on the ImageJevBench v0.3 leaderboard by Intelligence, Imajev-4B (#1)
+and H2O-Lightning-4B image (#2), and the larger Jev-Vision. All four answer the same 2,360 held-out multiple-choice
+questions, each served as its authors release it. Scores are Intelligence, 100 × (accuracy − chance) / (1 − chance);
+the best value in each column is in bold.
+
+| Model | Size | **Overall** | Documents | Charts | Spatial | Diagrams | Multi-image | Counting | General photos | ECE ↓ |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Fovea-4B (ours)** | 4B | **80.6** | 99.0 | **86.2** | **57.4** | 76.3 | **52.3** | **71.6** | 45.3 | **0.035** |
+| H2O-Lightning-4B image | 4B | 79.9 | **99.3** | 84.8 | 56.4 | **77.0** | 45.9 | 70.5 | **47.1** | 0.061 |
+| Imajev-4B | 4B | 79.4 | 98.7 | 84.8 | 55.8 | 74.7 | 49.3 | 70.5 | 43.6 | 0.059 |
+| Jev-Vision | 8B | 75.7 | 98.0 | 70.3 | **57.4** | 74.7 | 43.4 | 56.8 | 45.8 | 0.179 |
+
+Paired on the same questions, Fovea-4B leads Imajev-4B by +1.1 points (95% interval +0.3 to +2.0), H2O-Lightning-4B by
++0.7 (−0.7 to +2.0) and Jev-Vision by +4.9 (+3.0 to +6.7) overall. Fovea-4B answers 80.6% of the questions correctly.
+
+**How each model was served.** Fovea-4B: images up to 2 MP, its calibrated temperatures. Imajev-4B: native resolution,
+temperature 1.305. H2O-Lightning-4B image: images up to 1 MP, temperature 0.65. Jev-Vision: its own decision function,
+images up to 1.29 MP, temperature 0.5.
+
+**Evaluation data.** Test or validation splits of public benchmarks, none used for training: DocVQA (400 document
+questions), ChartQA (300) and SEED-Bench-2-Plus charts (100), AI2D (300 diagrams) and SEED-Bench-2-Plus maps (100),
+CV-Bench (300: depth, distance, spatial relation, counting), BLINK (560: spatial reasoning, counting and nine
+multi-image tasks) and MMStar (300 general photos). Overall weights the categories by the ImageJevBench core-track mix;
+ECE is the ten-bin expected calibration error of the top answer. This is our own held-out evaluation, not a leaderboard
+result: the sets are easier than ImageJevBench's sealed items and contain only multiple-choice questions, so the
+absolute numbers do not predict a leaderboard score.
+
 ## Training
 
 Fovea-4B was trained on 57,441 typed image decisions with a cross-entropy loss on the decision readout (teacher
@@ -74,26 +103,6 @@ language-model projection (attention, MLP and the Gated DeltaNet projections; th
 the readout, in two runs (peak learning rate 5e-5 and 2e-5, 8 questions per step, cosine decay to 10%). The released
 weights are the exact weight-space average of the best checkpoint of each run, merged into the model. 300 source
 questions were held out and checked every 500 steps. No benchmark test items were used for training.
-
-## Evaluation
-
-Our own held-out evaluation, not a leaderboard result: 2,360 multiple-choice items from the test or validation splits
-of public benchmarks, none of them used for training, served exactly as released (2 MP cap, shipped temperature) and
-scored with ImageJevBench's formulas: Intelligence = 100 × (accuracy − chance) / (1 − chance), Calibration =
-100 × (1 − ECE/0.5) with ten-bin top-label ECE.
-
-| Skill (sources) | Items | Accuracy | Intelligence | Calibration |
-|---|---|---|---|---|
-| Documents (DocVQA validation) | 400 | 99.2% | 99.0 | 96.4 |
-| Charts (ChartQA test, SEED-Bench-2-Plus charts) | 400 | 89.8% | 86.2 | 93.0 |
-| Diagrams and maps (AI2D test, SEED-Bench-2-Plus maps) | 400 | 82.2% | 76.3 | 87.3 |
-| Counting (CV-Bench, BLINK) | 115 | 78.3% | 71.6 | 87.8 |
-| Spatial relations and depth (CV-Bench, BLINK) | 385 | 78.7% | 57.4 | 81.8 |
-| Multi-image comparison (BLINK, 9 tasks) | 360 | 68.6% | 52.3 | 87.9 |
-| General photos (MMStar) | 300 | 59.0% | 45.3 | 76.3 |
-| **All 2,360 items** | | **80.6%** | | ECE 0.035 |
-
-These sets are easier than ImageJevBench's sealed items, so the absolute numbers do not predict a leaderboard score.
 
 ## Limits
 

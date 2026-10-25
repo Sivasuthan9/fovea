@@ -3,7 +3,8 @@
 <p align="center"><b>A fast, calibrated decision model for images</b></p>
 
 <p align="center">
-  <a href="https://huggingface.co/Sivasuthan/fovea-4b"><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-fovea--4b-ffcc4d"></a>
+  <a href="https://huggingface.co/Sivasuthan/fovea-4b"><img alt="Model on Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-fovea--4b-ffcc4d"></a>
+  <a href="https://huggingface.co/Sivasuthan/fovea-4b"><img alt="Hugging Face downloads" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2FSivasuthan%2Ffovea-4b%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=%F0%9F%A4%97%20downloads&color=ffcc4d&cacheSeconds=3600"></a>
   <a href="LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-2a78d6"></a>
   <img alt="Parameters: 4B" src="https://img.shields.io/badge/parameters-4B-1baf7a">
   <img alt="API: TypeSafe System One" src="https://img.shields.io/badge/API-TypeSafe%20System%20One-5c5c58">
