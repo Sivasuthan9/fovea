@@ -52,6 +52,10 @@ returns `{"model": "fovea-4b", "answers": {"decision": {"type": "choice", "choic
 top-level `images` list. Every answer covers exactly the requested labels and sums to 1; a question that cannot be scored
 gets a uniform answer rather than an error.
 
+**GGUF and other quantised versions.** Community GGUF files (for example mradermacher/fovea-4b-GGUF) contain only the
+base network, not Fovea's decision readout or calibration, so they do not reproduce the results below. For calibrated
+decisions, use the official server above.
+
 ## Evaluation
 
 Fovea-4B against the two strongest open 4B models on the ImageJevBench v0.3 leaderboard by Intelligence, Imajev-4B (#1)
