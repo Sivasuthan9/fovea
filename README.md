@@ -25,7 +25,7 @@ over TypeSafe's System One API, so any client of that API can call it unchanged.
 <h2 align="center">Results</h2>
 
 <p align="center">
-  <img src="assets/comparison.png" alt="Fovea-4B compared with Imajev-4B, H2O-Lightning-4B and Jev-Vision on 2,360 held-out questions" width="100%">
+  <img src="https://raw.githubusercontent.com/Sivasuthan9/fovea/main/assets/comparison.png" alt="Fovea-4B compared with Imajev-4B, H2O-Lightning-4B and Jev-Vision on 2,360 held-out questions" width="100%">
 </p>
 
 We compare Fovea-4B with three open decision models: the two strongest open 4B models on the ImageJevBench v0.3
@@ -50,6 +50,33 @@ spatial reasoning, counting and nine multi-image tasks) and MMStar (300 general 
 categories by the ImageJevBench core-track mix. This is our own held-out evaluation, not the ImageJevBench leaderboard:
 it contains only multiple-choice questions, and leaderboard scores are lower and can rank models differently.
 
+<h2 align="center">Python SDK</h2>
+
+```sh
+pip install fovea-sdk              # the client: talks to a running Fovea server, no extra packages
+pip install "fovea-sdk[local]"     # also runs the model on your own GPU
+```
+
+```python
+from fovea_sdk import FoveaClient, FoveaLocal
+
+fovea = FoveaClient("http://127.0.0.1:8000")      # a running server (fovea-sdk serve)
+# fovea = FoveaLocal()                            # or run the model in this process
+
+a = fovea.choice("What is the total on the receipt in `image`?", ["12.40", "14.20", "21.40"], image="receipt.jpg")
+print(a.value, a.probability)                     # the chosen option and its probability
+
+a = fovea.noul("The parcel in `image` is damaged.", image="parcel.jpg")
+print(a.value, a.probabilities)                   # True or False, and {'yes': p, 'no': 1 - p}
+
+a = fovea.score("How damaged is the car in `image`?", ["none", "light", "moderate", "severe"], image="car.jpg")
+print(a.value, a.probabilities)                   # the level index, and a probability for each level
+```
+
+Images can be file paths, bytes, base64 strings or PIL images, and several images can be passed with `images=[...]`.
+The command line does the same: `fovea-sdk serve --port 8000`, then
+`fovea-sdk ask --image receipt.jpg --question "What is the total?" --options 12.40,14.20,21.40`.
+
 <h2 align="center">Run the server</h2>
 
 ```sh
@@ -57,7 +84,7 @@ git clone https://github.com/Sivasuthan9/fovea && cd fovea
 python3.12 -m venv .venv && . .venv/bin/activate
 pip install torch==2.13.0 torchvision==0.28.0 --index-url https://download.pytorch.org/whl/cu130
 pip install -r requirements.txt
-python scripts/serve.py --model Sivasuthan/fovea-4b --revision 55c1dd919bc59dfd3316de6d752e18f3242ad385 --port 8000
+python scripts/serve.py --model Sivasuthan/fovea-4b --revision 55c1dd919bc59dfd3316de6d752e18f3242ad385 --port 8000   # or: fovea-sdk serve
 ```
 
 One GPU with 16 GB or more is enough. Start-up downloads the weights (9 GB), records CUDA graphs and warms up the kernels;

@@ -5,8 +5,8 @@
 import argparse
 import time
 
-from fovea.engine import FastPath, FoveaEngine
-from fovea.server import DecisionServer, serve
+from fovea_sdk.engine import FastPath, FoveaEngine
+from fovea_sdk.server import DecisionServer, serve
 
 
 def main():
