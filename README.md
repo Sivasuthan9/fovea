@@ -12,6 +12,7 @@
 <p align="center">
   <img height="30" alt="Parameters: 4B" src="https://img.shields.io/badge/parameters-4B-1baf7a">
   <img height="30" alt="API: TypeSafe System One" src="https://img.shields.io/badge/API-TypeSafe%20System%20One-5c5c58">
+  <a href="https://pypi.org/project/fovea-sdk/"><img height="30" alt="PyPI" src="https://img.shields.io/pypi/v/fovea-sdk?label=PyPI&color=2a78d6"></a>
 </p>
 
 Fovea-4B is a fast decision model for images. Given an image (a photo, document, receipt, chart or screenshot), a JSON
@@ -52,10 +53,21 @@ it contains only multiple-choice questions, and leaderboard scores are lower and
 
 <h2 align="center">Python SDK</h2>
 
+Install from [PyPI](https://pypi.org/project/fovea-sdk/):
+
 ```sh
 pip install fovea-sdk              # the client: talks to a running Fovea server, no extra packages
 pip install "fovea-sdk[local]"     # also runs the model on your own GPU
 ```
+
+| Use | Needs |
+|---|---|
+| Client (`FoveaClient`) | Python 3.9 or later; no other packages |
+| Local model (`FoveaLocal`, `fovea-sdk serve`) | Python 3.10 or later, one GPU with 16 GB or more, a CUDA build of PyTorch (Blackwell GPUs: CUDA 12.8 or later) |
+
+Check the install with `fovea-sdk --help`, and upgrade with `pip install -U fovea-sdk`. For the local model, install
+PyTorch for your CUDA version first (for example `pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130`),
+then `pip install "fovea-sdk[local]"`. The first run downloads the weights (9 GB) from Hugging Face.
 
 ```python
 from fovea_sdk import FoveaClient, FoveaLocal
